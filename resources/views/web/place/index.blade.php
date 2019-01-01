@@ -16,7 +16,7 @@
             <th style="width: 10px">#</th>
             <th>Name</th>
             <th>Address</th>
-            <th style="width: 120px">Action</th>
+            <th style="width: 210px">Action</th>
           </tr>
           @if (($places->count() == 0))
             <tr>
@@ -30,6 +30,7 @@
                 <td>{{ $place->name }}</td>
                 <td>{{ $place->address }}</td>
                 <td>
+                    <a href="{{ route('place.images', $place->id) }}"> <i class="fa fa-eye"></i> Images </a>
                     <a href="{{ route('place.edit', $place->id) }}"> <i class="fa fa-pencil"></i> Edit </a>
                     
                     <a href="#" class="btn-delete" data-id="{{ $place->id }}"><i class="nav-icon fa fa-trash"></i> Delete </a>

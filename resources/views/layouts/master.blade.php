@@ -8,6 +8,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {{-- Dropzone --}}
+    <link rel="stylesheet" href="{{ asset('plugins/dropzone/dropzone.css') }}">
     @yield('css')
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">

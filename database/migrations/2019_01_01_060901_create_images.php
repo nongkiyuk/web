@@ -17,7 +17,7 @@ class CreateImages extends Migration
             $table->increments('id');
             $table->integer('place_id');
             $table->string('image');
-            $table->boolean('is_cover');
+            $table->boolean('is_cover')->default('0');
             $table->timestamps();
         });
     }
