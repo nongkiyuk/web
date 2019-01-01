@@ -30,6 +30,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * this is define setter for password attribute
+     *
+     * @param [type] $pass
+     * @return void
+     */
     public function setPasswordAttribute($pass){
         $this->attributes['password'] = Hash::make($pass);
     }

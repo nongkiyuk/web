@@ -1,7 +1,4 @@
-@if(Route::is('teacher.index') || Route::is('student.index') 
-    || Route::is('industry.index') || Route::is('period.index') 
-    || Route::is('placement.index') || Route::is('activity.index')
-    || Route::is('department.index') || Route::is('discussion.index')))
+@if(Route::is('index') || Route::is('user.index'))
 <script>
 $(document).on('click','.btn-delete', function(){
     formid = $(this).attr('data-id');
@@ -22,19 +19,3 @@ $(document).on('click','.btn-delete', function(){
 })
 </script>
 @endif
-
-@if (Route::is('period.create') || Route::is('period.edit'))
-<script>
-    var selector = document.getElementById("school_year");
-
-    var im = new Inputmask("9999/9999");
-    im.mask(selector);
-</script>
-@endif
-
-<script>
-$(document).on('change','#periodId', function(){
-    url = $(this).val();
-    location.href = url;
-})
-</script>

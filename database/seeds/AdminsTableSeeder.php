@@ -13,13 +13,15 @@ class AdminsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert([
-            'name' => "Administrator",
-            'email' => 'admin@example.com',
-            'username' => 'admin',
-            'password' => bcrypt('admin'),
-            "created_at" =>  \Carbon\Carbon::now(),
-            "updated_at" => \Carbon\Carbon::now(),
-        ]);
+        if(DB::table('admins')->count() == 0){
+            DB::table('admins')->insert([
+                'name' => "Administrator",
+                'email' => 'admin@example.com',
+                'username' => 'admin',
+                'password' => bcrypt('admin'),
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
+            ]);
+        }
     }
 }
