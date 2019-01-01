@@ -27,8 +27,13 @@ Route::namespace('Api')->group(function () {
         Route::post('signup', 'AuthController@signup');
 
         Route::group(['middleware' => 'auth:api'], function() {
+            //user
             Route::get('logout', 'AuthController@logout');
             Route::get('user', 'AuthController@user');
+
+            //place
+            Route::get('places', 'PlaceController@index');
+
         });
     });
 });

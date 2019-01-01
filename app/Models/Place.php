@@ -17,4 +17,9 @@ class Place extends Model
     {
         return $this->hasMany('App\Models\Image')->orderBy('created_at', 'DESC');
     }
+
+    public function getCover()
+    {
+        return Image::where(['place_id' => $this->id, 'is_cover' => 1])->first();
+    }
 }
