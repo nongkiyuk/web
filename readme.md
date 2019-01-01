@@ -13,6 +13,6 @@ cp .env.example .env
 
 ## Credential
 ```
-Username: <what>
-Password: <what>
+Username: admin
+Password: admin
 ```
