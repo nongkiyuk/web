@@ -1,7 +1,7 @@
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">Periode Aktif</li>
     <li>
-        <a href="{{ route('place.index') }}">
+        <a href="{{ route('index') }}">
             <i class="fa fa-list"></i>
             <span> Places </span>
         </a>
