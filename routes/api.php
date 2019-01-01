@@ -25,6 +25,7 @@ Route::namespace('Api')->group(function () {
         
         Route::post('login', 'AuthController@login');
         Route::post('signup', 'AuthController@signup');
+        Route::get('places', 'PlaceController@index');
 
         Route::group(['middleware' => 'auth:api'], function() {
             //user
@@ -32,7 +33,7 @@ Route::namespace('Api')->group(function () {
             Route::get('user', 'AuthController@user');
 
             //place
-            Route::get('places', 'PlaceController@index');
+            // Route::get('places', 'PlaceController@index');
 
         });
     });
