@@ -15,6 +15,14 @@ use Illuminate\Http\Request;
 
 Route::namespace('Api')->group(function () {
     Route::group(['prefix' => 'v1'], function () {
+        Route::get('/', function(){
+            return response()->json([
+                'status' => 'alive', 
+                'version' => '0.1',
+                'name' => 'Nongkiyuk Api'
+                ]);
+        });
+        
         Route::post('login', 'AuthController@login');
         Route::post('signup', 'AuthController@signup');
 

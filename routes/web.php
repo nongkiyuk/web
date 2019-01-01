@@ -19,7 +19,7 @@ Route::namespace('Web')->group(function () {
 
     Route::middleware(['auth:web'])->group(function () {
         //Places
-        Route::get('/', 'PlaceController@index')->name('place.index');
+        Route::get('/', 'PlaceController@index')->name('index');
         Route::get('/place/new', 'PlaceController@create')->name('place.create');
         Route::post('/place/new', 'PlaceController@store')->name('place.store');
         Route::get('/place/{id}/detail', 'PlaceController@show')->name('place.show');
