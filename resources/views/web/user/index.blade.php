@@ -31,9 +31,9 @@
                 <td>{{ $user->name }}</td>
                 <td>
                   @if($user->is_active)
-                    <p class="label bg-green cover">Active</p>
+                    <a href="{{ route('user.switch', $user->id) }}" class="label bg-green cover">Active</a>
                   @else
-                    <p class="label bg-red cover">Not Active</p>
+                    <a href="{{ route('user.switch', $user->id) }}" class="label bg-red cover">Not Active</a>
                   @endif
                 </td>
                 <td>{{ $user->email }}</td>

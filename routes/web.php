@@ -42,6 +42,7 @@ Route::namespace('Web')->group(function () {
         Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
         Route::post('/user/{id}/update', 'UserController@update')->name('user.update');
         Route::post('/user/{id}/delete', 'UserController@destroy')->name('user.destroy');
+        Route::get('/user/{id}/switch', 'UserController@switch')->name('user.switch');
         //User Favotire Place
         Route::post('/user/{id}/places', 'UserController@showPlaces')->name('user.place');
         

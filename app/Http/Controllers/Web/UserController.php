@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -25,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('web.user.form');
     }
 
     /**
@@ -36,18 +37,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'username' => 'required|max:255|unique:users',
+            'password' => 'required|min:6',
+            'picture' => 'image'
+        ]);
+        if ($validator->fails()) {
+            return back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
     }
 
     /**
@@ -58,7 +59,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('web.user.form',['user'=>$user]);
     }
 
     /**
@@ -70,7 +72,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       //
     }
 
     /**
@@ -82,5 +84,23 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function switch($id)
+    {
+        $user = User::find($id);
+        $status = (!$user->is_active) ? "Active"  : "Deactive";
+        $user->is_active = (!$user->is_active);
+        if($user->update()){
+            return back()->with('success', "User has been $status");
+        }else{
+            return back()->with('danger', 'Something went wrongs');
+        }
     }
 }
