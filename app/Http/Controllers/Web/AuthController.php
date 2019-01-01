@@ -14,13 +14,20 @@ class AuthController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * path to redirect after login
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest:web')->except('logout');
+        $this->middleware('guest:admins')->except('logout');
     }
 
     public function showFormLogin()
@@ -70,7 +77,7 @@ class AuthController extends Controller
     }
 
     protected function guard(){
-        return Auth::guard('web');
+        return Auth::guard('admins');
     }
 
     protected function redirectTo()

@@ -17,7 +17,7 @@ Route::namespace('Web')->group(function () {
     Route::post('login', 'AuthController@login')->name('login');
     Route::post('logout', 'AuthController@logout')->name('logout');
 
-    Route::middleware(['auth:web'])->group(function () {
+    Route::middleware(['auth:admins'])->group(function () {
         //Places
         Route::get('/', 'PlaceController@index')->name('index');
         Route::get('/place/new', 'PlaceController@create')->name('place.create');

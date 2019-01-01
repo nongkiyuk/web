@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\User;
 class UserController extends Controller
 {
     /**
@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $users = User::orderBy('created_at')->paginate(5);
+        return view('web.user.index', ['users' => $users]);
     }
 
     /**

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Carbon\Carbon;
 use App\Models\User;
 
 class AuthController extends Controller
 {
+
     /**
      * Create user
      *
@@ -46,6 +48,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = request(['username', 'password']);
+        $credentials['is_active'] = '1';
         if(!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
