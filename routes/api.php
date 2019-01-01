@@ -26,6 +26,7 @@ Route::namespace('Api')->group(function () {
         Route::post('login', 'AuthController@login');
         Route::post('signup', 'AuthController@signup');
         Route::get('places', 'PlaceController@index');
+        Route::get('place/{id}/detail', 'PlaceController@detail');
 
         Route::group(['middleware' => 'auth:api'], function() {
             //user

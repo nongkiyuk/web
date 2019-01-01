@@ -15,4 +15,9 @@ class PlaceController extends Controller
     {
         return new PlaceCollection(Place::paginate(5));
     }
+
+    public function detail($id)
+    {
+        return new PlaceResource(Place::find($id));
+    }
 }
