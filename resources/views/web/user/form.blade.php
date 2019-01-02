@@ -52,7 +52,7 @@
 <div class="col-md-3">
         <div class="box box-primary">
             <div class="box-body">
-                <img src="{{ isset($user) ? asset($user->picture) : asset('img/logo.png') }}" alt="" class="img-responsive" >
+                <img src="{{ isset($user) ? asset(env('PLACE_PROFILE_PATH').$user->picture) : asset('img/logo.png') }}" alt="" class="img-responsive" >
             </div>
         </div>
 </div>
