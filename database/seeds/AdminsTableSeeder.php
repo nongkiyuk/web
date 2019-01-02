@@ -18,7 +18,7 @@ class AdminsTableSeeder extends Seeder
                 'name' => "Administrator",
                 'email' => 'admin@example.com',
                 'username' => 'admin',
-                'password' => 'admin',
+                'password' => bcrypt('admin'),
                 "created_at" =>  \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
             ]);
