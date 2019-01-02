@@ -11,7 +11,7 @@
     @endif
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">New User</h3>
+            <h3 class="box-title">{{ isset($user) ? 'Edit' : 'New'}} User</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
