@@ -65,7 +65,6 @@ class PlaceController extends Controller
         $places = [];
         $user = $request->user();
         $favorites = Favorite::where(['user_id' => $user->id])->get();
-        $favorites = [];
         foreach($favorites as $index => $favorite){
             $place = Place::find($favorite->place_id);
             $places['data'][$index] = $place;
