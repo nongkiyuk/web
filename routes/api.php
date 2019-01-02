@@ -35,6 +35,8 @@ Route::namespace('Api')->group(function () {
 
             //place
             // Route::get('places', 'PlaceController@index');
+            Route::post('place/{id}/favorite', 'PlaceController@addToFavorite');
+            Route::get('places/favorite', 'PlaceController@getListFavorite');
 
         });
     });
