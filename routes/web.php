@@ -48,6 +48,7 @@ Route::namespace('Web')->group(function () {
         
         //Notification
         Route::get('/notification', 'NotificationController@index')->name('notification.index');
+        Route::post('/notification', 'NotificationController@send')->name('notification.send');
     });
 
 });
