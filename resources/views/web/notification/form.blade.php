@@ -50,12 +50,12 @@
 <script>
   // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyCvaJq1URInRItmsLHPWU8KEKm5n-ey0uY",
-    authDomain: "coba-notifikasi-d423c.firebaseapp.com",
-    databaseURL: "https://coba-notifikasi-d423c.firebaseio.com",
-    projectId: "coba-notifikasi-d423c",
-    storageBucket: "coba-notifikasi-d423c.appspot.com",
-    messagingSenderId: "25211865363"
+    apiKey: "{{ env('FIREBASE_API_KEY') }}",
+    authDomain: "{{ env('FIREBASE_AUTH_DOMAIN') }}",
+    databaseURL: "{{ env('FIREBASE_DATABASE_URL') }}",
+    projectId: "{{ env('FIREBASE_PROJECT_ID') }}",
+    storageBucket: "{{ env('FIREBASE_STORAGE') }}",
+    messagingSenderId: "{{ env('FIREBASE_SENDERID') }}"
   };
   firebase.initializeApp(config);
   

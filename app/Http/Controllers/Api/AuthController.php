@@ -27,12 +27,15 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
-            'password' => $request->password
+            'password' => $request->password,
+            'is_active' => '1'
         ]);
-        $user->save();
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+        if($user->save()){
+            return response()->json([
+                'message' => 'Successfully created user!'
+            ], 201);
+        }
+        
     }
 
     /**
