@@ -14,6 +14,16 @@ use App\Models\Favorite;
 
 class PlaceController extends Controller
 {
+
+    protected $response = [
+        'data' => [
+            'msg' => 'Some text here',
+        ],
+        'meta' => [
+            'total' => '0'
+        ]
+    ];
+
     public function index()
     {
         return new PlaceCollection(Place::paginate(5));
@@ -21,7 +31,12 @@ class PlaceController extends Controller
 
     public function detail($id)
     {
-        return new PlaceResource(Place::find($id));
+        $place = Place::find($id);
+        if($place != null){
+            return new PlaceResource(Place::find($id));
+        }
+        $this->response['data']['msg'] = "No Place Found";
+        return response()->json($this->response);
     }
 
     public function addToFavorite(Request $request, $id)
@@ -58,6 +73,28 @@ class PlaceController extends Controller
             ], 201);
         }
 
+    }
+
+    public function deleteFromFavorite(Request $request, $id)
+    {
+
+        $user = $request->user();
+        $place = Place::find($id);
+        if($place == null){
+            $this->response['data']['msg'] = 'Failed, Place not found';
+            return response()->json($this->response);
+        }
+        $favorite = Favorite::where(['place_id' => $place->id, 'user_id' => $user->id]);
+        if($favorite->count() == 0){
+            $this->response['data']['msg'] = 'Failed, Place not in favorite';
+            return response()->json($this->response);
+        }else if($favorite->delete()){
+            $this->response['data']['msg'] = 'Successfully remove place';
+            return response()->json($this->response);
+        }else{
+            $this->response['data']['msg'] = 'Something went wrong';
+            return response()->json($this->response);
+        }
     }
 
     public function getListFavorite(Request $request)

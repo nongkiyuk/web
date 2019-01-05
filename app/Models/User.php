@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'username', 'password',
+        'name', 'email', 'username', 'password', 'is_active'
     ];
 
     /**
@@ -38,5 +38,13 @@ class User extends Authenticatable
      */
     public function setPasswordAttribute($pass){
         $this->attributes['password'] = Hash::make($pass);
+    }
+
+    public function getPictureAttribute(){
+        if(!empty($this->attributes['picture'])){
+            return asset(env('PLACE_PROFILE_PATH').$this->attributes['picture']);
+        }
+        return asset('img/logo.png');
+        
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,15 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+
+    protected $response = [
+        'data' => [
+            'msg' => 'Some text here',
+        ],
+        'meta' => [
+            'total' => '0'
+        ]
+    ];
 
     /**
      * Create user
@@ -23,6 +33,16 @@ class AuthController extends Controller
      */
     public function signup(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'username' => 'required|max:255|unique:users',
+            'password' => 'required|min:6',
+        ]);
+        if ($validator->fails()) {
+            $this->response['data']['msg'] = $validator->errors()->first();
+            return response()->json($this->response);
+        }
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
@@ -31,10 +51,11 @@ class AuthController extends Controller
             'is_active' => '1'
         ]);
         if($user->save()){
-            return response()->json([
-                'message' => 'Successfully created user!'
-            ], 201);
+            $this->response['data']['msg'] = "Successfully created user!";
+            return response()->json($this->response, 201);
         }
+        $this->response['data']['msg'] = "Something went wrong!";
+        return response()->json($this->response, 204);
         
     }
 
@@ -52,23 +73,30 @@ class AuthController extends Controller
     {
         $credentials = request(['username', 'password']);
         $credentials['is_active'] = '1';
-        if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+        if(!Auth::attempt($credentials)){
+            $this->response['data']['msg'] = "Unauthorized";
+            return response()->json($this->response, 401);
+        }
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
-        $token->save();
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
-        ]);
+        if($token->save())
+        {
+            $this->response['data'] = [
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString()
+            ];
+            return response()->json($this->response, 201);
+        }
+
+        $this->response['data']['msg'] = "Something went wrong!";
+        return response()->json($this->response, 204);
+        
     }
   
     /**
@@ -78,10 +106,12 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
+        if($request->user()->token()->revoke()){
+            $this->response['data']['msg'] = "Successfully logged out";
+            return response()->json($this->response, 201);
+        }
+        $this->response['data']['msg'] = "Something went wrong!";
+        return response()->json($this->response, 204);
     }
   
     /**
@@ -91,7 +121,12 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        if($request->user() != null){
+            $this->response['data'] = $request->user();
+            return response()->json($this->response);
+        }
+        $this->response['data']['msg'] = "Something went wrong!";
+        return response()->json($this->response, 204);
     }
 
     /**

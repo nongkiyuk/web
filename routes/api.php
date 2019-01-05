@@ -30,12 +30,13 @@ Route::namespace('Api')->group(function () {
 
         Route::group(['middleware' => 'auth:api'], function() {
             //user
-            Route::get('logout', 'AuthController@logout');
+            Route::delete('logout', 'AuthController@logout');
             Route::get('user', 'AuthController@user');
 
             //place
             // Route::get('places', 'PlaceController@index');
             Route::post('place/{id}/favorite', 'PlaceController@addToFavorite');
+            Route::delete('place/{id}/favorite', 'PlaceController@deleteFromFavorite');
             Route::get('places/favorite', 'PlaceController@getListFavorite');
 
         });
