@@ -71,6 +71,15 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|max:255',
+            'password' => 'required|min:6',
+        ]);
+        if ($validator->fails()) {
+            $this->response['data']['msg'] = $validator->errors()->first();
+            return response()->json($this->response);
+        }
         $credentials = request(['username', 'password']);
         $credentials['is_active'] = '1';
         if(!Auth::attempt($credentials)){
@@ -123,6 +132,77 @@ class AuthController extends Controller
     {
         if($request->user() != null){
             $this->response['data'] = $request->user();
+            return response()->json($this->response);
+        }
+        $this->response['data']['msg'] = "Something went wrong!";
+        return response()->json($this->response, 204);
+    }
+
+    /**
+     * Update user profile
+     * 
+     * 
+     * @return [json]
+     */
+    public function update(Request $request)
+    {
+        $user_id = $request->user()->id;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'username' => 'required|max:255',
+            'password' => 'min:6',
+        ]);
+        if ($validator->fails()) {
+            $this->response['data']['msg'] = $validator->errors()->first();
+            return response()->json($this->response);
+        }
+
+        $user = User::find($user_id);
+
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->username = request('username');
+
+        if(!empty(request('password'))){
+            $user->password = request('password');
+        }
+        
+        if($user->update()){
+            $this->response['data']['msg'] = "Successfully updated user!";
+            return response()->json($this->response);
+        }
+        $this->response['data']['msg'] = "Something went wrong!";
+        return response()->json($this->response, 204);
+        
+    }
+
+    /**
+     * Update user picture profile
+     * 
+     * 
+     * @return [json]
+     */
+    public function changePicture(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'picture' => 'required|image',
+        ]);
+        if ($validator->fails()) {
+            $this->response['data']['msg'] = $validator->errors()->first();
+            return response()->json($this->response);
+        }
+        $user_id = $request->user()->id;
+        $image = $request->file('picture');
+        $name = $image->hashName();
+        if($image = $image->move(env('PLACE_PROFILE_PATH'), $name)){
+            $user = User::find($user_id);
+            $user->picture = $name;
+            if($user->update()){
+                $this->response['data']['msg'] = "Successfully update user picture!";
+                return response()->json($this->response);
+            }
+            $this->response['data']['msg'] = "Failed update user picture, cause of directory error!";
             return response()->json($this->response);
         }
         $this->response['data']['msg'] = "Something went wrong!";

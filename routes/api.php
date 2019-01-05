@@ -32,6 +32,8 @@ Route::namespace('Api')->group(function () {
             //user
             Route::delete('logout', 'AuthController@logout');
             Route::get('user', 'AuthController@user');
+            Route::patch('user', 'AuthController@update');
+            Route::post('user/picture', 'AuthController@changePicture');
 
             //place
             // Route::get('places', 'PlaceController@index');
