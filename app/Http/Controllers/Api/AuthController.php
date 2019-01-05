@@ -41,7 +41,7 @@ class AuthController extends Controller
         ]);
         if ($validator->fails()) {
             $this->response['data']['msg'] = $validator->errors()->first();
-            return response()->json($this->response);
+            return response()->json($this->response, 422);
         }
         $user = new User([
             'name' => $request->name,
@@ -78,7 +78,7 @@ class AuthController extends Controller
         ]);
         if ($validator->fails()) {
             $this->response['data']['msg'] = $validator->errors()->first();
-            return response()->json($this->response);
+            return response()->json($this->response, 422);
         }
         $credentials = request(['username', 'password']);
         $credentials['is_active'] = '1';
@@ -156,7 +156,7 @@ class AuthController extends Controller
         ]);
         if ($validator->fails()) {
             $this->response['data']['msg'] = $validator->errors()->first();
-            return response()->json($this->response);
+            return response()->json($this->response, 422);
         }
 
         $user = User::find($user_id);
@@ -191,7 +191,7 @@ class AuthController extends Controller
         ]);
         if ($validator->fails()) {
             $this->response['data']['msg'] = $validator->errors()->first();
-            return response()->json($this->response);
+            return response()->json($this->response, 422);
         }
         $user_id = $request->user()->id;
         $image = $request->file('picture');
