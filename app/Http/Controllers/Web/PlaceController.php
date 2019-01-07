@@ -140,7 +140,7 @@ class PlaceController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'description' => 'required|max:255',
+            'description' => 'required',
             'address' => 'required|max:255',
             'longitude' => 'required',
             'latitude' => 'required',
@@ -184,7 +184,7 @@ class PlaceController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'description' => 'required|max:255',
+            'description' => 'required',
             'address' => 'required|max:255',
             'longitude' => 'required',
             'latitude' => 'required',
