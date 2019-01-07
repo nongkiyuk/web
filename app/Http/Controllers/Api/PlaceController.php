@@ -26,7 +26,7 @@ class PlaceController extends Controller
 
     public function index()
     {
-        return new PlaceCollection(Place::orderBy('id', 'desc')->paginate(5));
+        return new PlaceCollection(Place::orderBy('id', 'desc')->paginate(25));
     }
 
     public function detail($id)
