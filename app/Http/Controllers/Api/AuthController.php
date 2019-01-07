@@ -152,7 +152,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email',
             'username' => 'required|max:255',
-            'password' => 'min:6',
+            'password' => 'nullable|min:6',
         ]);
         if ($validator->fails()) {
             $this->response['data']['msg'] = $validator->errors()->first();
