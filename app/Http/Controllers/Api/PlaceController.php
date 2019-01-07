@@ -26,7 +26,7 @@ class PlaceController extends Controller
 
     public function index()
     {
-        return new PlaceCollection(Place::paginate(5));
+        return new PlaceCollection(Place::orderBy('id', 'desc')->paginate(5));
     }
 
     public function detail($id)
@@ -101,7 +101,7 @@ class PlaceController extends Controller
     {
         $places = [];
         $user = $request->user();
-        $favorites = Favorite::where(['user_id' => $user->id])->get();
+        $favorites = Favorite::where(['user_id' => $user->id])->orderBy('id','desc')->get();
         foreach($favorites as $index => $favorite){
             $place = Place::find($favorite->place_id);
             $places['data'][$index] = $place;
