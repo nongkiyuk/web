@@ -18,7 +18,7 @@ class Place extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'desciption' => $this->description,
+            'description' => $this->description,
             'address' => $this->address,
             'cover' => new ImageResource($this->getCover()),
             'longitude' => $this->longitude,
