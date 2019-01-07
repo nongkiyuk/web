@@ -77,7 +77,6 @@ class PlaceController extends Controller
 
     public function deleteFromFavorite(Request $request, $id)
     {
-
         $user = $request->user();
         $place = Place::find($id);
         if($place == null){
@@ -116,5 +115,25 @@ class PlaceController extends Controller
             ];
         }
         return response()->json($places);
+    }
+
+    public function checkFavorite(Request $request, $id)
+    {
+        $user = $request->user();
+        $place = Place::find($id);
+        if($place == null){
+            $this->response['data']['msg'] = 'Failed, Place not found';
+            return response()->json($this->response);
+        }
+        $favorite = Favorite::where(['place_id' => $place->id, 'user_id' => $user->id]);
+        if($favorite->count() == 0){
+            $this->response['data']['status'] = "false";
+            $this->response['data']['msg'] = 'Place not in favorite';
+            return response()->json($this->response);
+        }else{
+            $this->response['data']['status'] = "true";
+            $this->response['data']['msg'] = 'Place in favorite';
+            return response()->json($this->response);
+        }
     }
 }

@@ -37,6 +37,7 @@ Route::namespace('Api')->group(function () {
 
             //place
             // Route::get('places', 'PlaceController@index');
+            Route::get('place/{id}', 'PlaceController@checkFavorite');
             Route::post('place/{id}/favorite', 'PlaceController@addToFavorite');
             Route::delete('place/{id}/favorite', 'PlaceController@deleteFromFavorite');
             Route::get('places/favorite', 'PlaceController@getListFavorite');
